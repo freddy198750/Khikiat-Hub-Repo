@@ -5,7 +5,7 @@ fileMap["Roblox"] := "Roblox.ahk"
 fileMap["Minecraft"] := "Minecraft.ahk"
 fileMap["League of Legends"] := "League of Legends.ahk"
 
-baseURL := "https://raw.githubusercontent.com/YourUser/YourRepo/main/"
+baseURL := "https://github.com/freddy198750/Khikiat-Hub-Repo/tree/main/"
 
 Gui, +AlwaysOnTop -Resize +MinimizeBox +MaximizeBox
 Gui, Color, 1E1E1E  ; dark background
