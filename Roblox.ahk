@@ -26,7 +26,7 @@ Gui, 4:Add, Edit, x30 y120 w320 vCustomParam, Custom Param ; กำหนดพ�
 
 Gui, 4:Tab
 Gui, 4:Add, Button, x150 y210 w100 h30 gToggleStartStop cBlack Background32CD32 vStartStopBtn, Start ; ปุ่มเริ่มต้น/หยุด
-Gui, 4:Add, Text, x260 y215 w100 vStatusText cRed, Status: Stopped ; สถานะเริ่มต้น: หยุด
+Gui, 4:Add, Text, x260 y215 w100 vStatusText cRed, Status: Stopped
 
 Gui, 4:Show, w400 h260, Roblox Config ; แสดงหน้าต่าง GUI 4
 Gui, 4:Default
@@ -42,14 +42,15 @@ ToggleStartStop:
 Gui, 4:Submit, NoHide ; บันทึกค่าจาก GUI โดยไม่ปิด
 GuiControlGet, currentLabel,, StartStopBtn ; ดึงข้อความจากปุ่ม
 if (currentLabel = "Start") {
-    GuiControl,, StartStopBtn, Stop ; เปลี่ยนข้อความปุ่มเป็น Stop
-    GuiControl,, StatusText, Status: Running ; อัปเดตสถานะ
-    GuiControl, +cGreen, StatusText ; สีเขียวเมื่อทำงานอยู่
+    GuiControl,, StartStopBtn, Stop
+    GuiControl,, StatusText, Status: Running
+    GuiControl, +cGreen, StatusText ; ✅ สีเขียวเมื่อ Running
 } else {
-    GuiControl,, StartStopBtn, Start ; เปลี่ยนกลับเป็น Start
-    GuiControl,, StatusText, Status: Stopped ; อัปเดตสถานะ
-    GuiControl, +cRed, StatusText ; สีแดงเมื่อหยุด
+    GuiControl,, StartStopBtn, Start
+    GuiControl,, StatusText, Status: Stopped
+    GuiControl, +cRed, StatusText ; ✅ สีแดงเมื่อ Stopped
 }
+
 return
 
 TeleportToDest:
