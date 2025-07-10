@@ -1,4 +1,5 @@
 #SingleInstance Force
+#NoTrayIcon ; ไม่ให้มีไอคอนใน system tray ด้วย (เสริม ถ้าต้องการเงียบสนิท)
 
 Gui, 4:Destroy
 Gui, 4:+AlwaysOnTop -Resize +MinimizeBox +MaximizeBox +Owner
@@ -34,10 +35,12 @@ Gui, 4:Default
 GuiControl,, StatusText, Status: Stopped
 return
 
+; ปิด GUI แล้วหยุดการทำงานทันที
 GuiClose:
 ExitApp
 return
 
+; ไม่มีฟังก์ชันเบื้องหลังเลย
 ToggleStartStop:
 Gui, 4:Submit, NoHide
 GuiControlGet, currentLabel,, StartStopBtn
