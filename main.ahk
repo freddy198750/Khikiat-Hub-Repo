@@ -1,29 +1,45 @@
-games := ["Roblox", "Minecraft", "Genshin Impact"]
+games := ["Roblox", "Minecraft", "League of Legends"]
 
 fileMap := Object()
 fileMap["Roblox"] := "Roblox.ahk"
 fileMap["Minecraft"] := "Minecraft.ahk"
-fileMap["Genshin Impact"] := "Genshin.ahk"
+fileMap["League of Legends"] := "League of Legends.ahk"
 
 baseURL := "https://raw.githubusercontent.com/YourUser/YourRepo/main/"
 
-Gui, Add, Text, x30 y30, Select Game
-Gui, Add, DropDownList, x120 y28 vSelectedGame w200, % JoinList(games)
+Gui, +AlwaysOnTop -Resize +MinimizeBox +MaximizeBox
+Gui, Color, 1E1E1E  ; dark background
+Gui, Font, s10 cWhite, Segoe UI
 
-Gui, Add, Button, x160 y80 gRunFunction w80 h30, RUN
+Gui, Add, GroupBox, x20 y15 w360 h90 cGreen, Select Game
+Gui, Add, DropDownList, x40 y45 vSelectedGame w200 cWhite Background202020, % JoinList(games)
+Gui, Add, Button, x260 y42 gRunFunction w100 h30 cBlack Background32CD32, RUN
 
-Gui, Show, w400 h150, Khikiat Hub
+Gui, Show, w400 h130, Khikiat Hub
 return
 
 RunFunction:
 Gui, Submit, NoHide
-if (fileMap.HasKey(SelectedGame)) {
-    fullURL := baseURL . fileMap[SelectedGame]
-    tempFile := A_Temp . "\\temp_" . fileMap[SelectedGame]
+selectedFile := fileMap[SelectedGame]
+if (selectedFile != "") {
+    fullURL := baseURL . selectedFile
+    tempFile := A_Temp . "\\temp_" . selectedFile
     URLDownloadToFile, %fullURL%, %tempFile%
-    Run, %tempFile%
+
+    if FileExist(tempFile) {
+        FileRead, fileContent, %tempFile%
+        if InStr(fileContent, "404: Not Found") {
+            CustomMsgBox("ไม่พบไฟล์บน GitHub: " . selectedFile)
+            FileDelete, %tempFile%
+            return
+        } else {
+            Run, %tempFile%
+        }
+    } else {
+        CustomMsgBox("ไม่สามารถดาวน์โหลดไฟล์: " . selectedFile)
+    }
 } else {
-    MsgBox, ไม่พบเกมหรือยังไม่ได้ระบุ URL
+    CustomMsgBox("ไม่พบเกมหรือยังไม่ได้ระบุ URL")
 }
 return
 
@@ -36,3 +52,17 @@ JoinList(arr) {
 
 GuiClose:
 ExitApp
+
+CustomMsgBox(msg) {
+    Gui, 2:Destroy
+    Gui, 2:+AlwaysOnTop -SysMenu +ToolWindow
+    Gui, 2:Color, 1E1E1E
+    Gui, 2:Font, s10 cWhite, Segoe UI
+    Gui, 2:Add, Text, x20 y20 w360 h60 Center, %msg%
+    Gui, 2:Add, Button, x160 y90 w80 h30 gCloseCustomMsgBox, OK
+    Gui, 2:Show, w400 h140, Notification
+}
+
+CloseCustomMsgBox:
+Gui, 2:Destroy
+return
