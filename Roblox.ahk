@@ -35,8 +35,7 @@ GuiControl, +cRed, StatusText ; ตั้งสีเริ่มต้นเป
 return
 
 GuiClose:
-Run, main.ahk ; กลับไปหน้า Main เมื่อปิด Roblox GUI
-ExitApp
+ExitApp ; ปิดโปรแกรมโดยสมบูรณ์เมื่อปิดหน้าต่าง GUI
 return
 
 ToggleStartStop:
