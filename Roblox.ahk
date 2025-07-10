@@ -1,3 +1,5 @@
+#SingleInstance Force
+
 Gui, 4:Destroy
 Gui, 4:+AlwaysOnTop -Resize +MinimizeBox +MaximizeBox +Owner
 Gui, 4:Color, 1E1E1E
